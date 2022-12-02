@@ -7,6 +7,8 @@
 
 import Foundation
 import APIKitCore
+@_exported import protocol APIKitCore.Decoder
+@_exported import protocol APIKitCore.Encoder
 
 public enum APIURLRequestableType<RequestBodyType: Encodable> {
     case data(RequestBodyType?)

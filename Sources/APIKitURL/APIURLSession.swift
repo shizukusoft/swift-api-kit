@@ -23,7 +23,6 @@ public actor APIURLSession {
 
 extension APIURLSession {
     @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
-    @_disfavoredOverload
     public func request(_ request: URLRequestable) async throws -> (URLRequestable.RequestPayload, URLResponse) {
         let urlRequest = request.urlRequest
 
@@ -113,10 +112,12 @@ extension APIURLSession {
     }
 
     @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
+    @_disfavoredOverload
     public func request<R: APIURLRequestable>(_ request: R) async throws -> R.ResponseBodyType {
         try await self.request(request).0
     }
 
+    @_disfavoredOverload
     public func request<R: APIURLRequestable>(_ request: R, completionHandler: @escaping (Result<(R.ResponseBodyType, URLResponse), Error>) -> Void) {
         self.request(request as URLRequestable) { result in
             completionHandler(
