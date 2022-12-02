@@ -64,3 +64,5 @@ extension APIURLRequestable {
         }
     }
 }
+
+extension APIURLRequestable where Self: Encodable, RequestBodyType == Self { }
