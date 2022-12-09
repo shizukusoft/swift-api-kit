@@ -101,7 +101,12 @@ extension OAuth1URLAuthenticator {
                     return $0.name < $1.name
                 }
             })
-            .map { [$0.name.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed), $0.value?.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed).flatMap { "\"\($0)\"" }].compactMap { $0 } }
+            .map {
+                [
+                    $0.name.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed),
+                    $0.value?.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed).flatMap { "\"\($0)\"" }
+                ].compactMap { $0 }
+            }
             .map { $0.joined(separator: "=") }
             .joined(separator: ",")
 

@@ -26,7 +26,7 @@ extension OAuth2URLAuthenticator {
     public struct Credential {
         public var tokenType: String
         public var accessToken: String
-        
+
         public var refreshToken: String?
     }
 }

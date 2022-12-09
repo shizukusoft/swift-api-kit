@@ -9,13 +9,13 @@ import Foundation
 
 extension Actor {
     @inlinable
-    public func run<T>(resultType: T.Type = T.self, body: @Sendable (isolated Self) throws -> T) async rethrows -> T where T : Sendable {
+    public func run<T>(resultType: T.Type = T.self, body: @Sendable (isolated Self) throws -> T) async rethrows -> T where T: Sendable {
         try body(self)
     }
 
     @_disfavoredOverload
     @inlinable
-    public func run<T>(resultType: T.Type = T.self, body: @Sendable (isolated Self) async throws -> T) async rethrows -> T where T : Sendable {
+    public func run<T>(resultType: T.Type = T.self, body: @Sendable (isolated Self) async throws -> T) async rethrows -> T where T: Sendable {
         try await body(self)
     }
 }
@@ -23,7 +23,7 @@ extension Actor {
 extension MainActor {
     @_disfavoredOverload
     @inlinable
-    public static func run<T>(resultType: T.Type = T.self, body: @MainActor @Sendable () async throws -> T) async rethrows -> T where T : Sendable {
+    public static func run<T>(resultType: T.Type = T.self, body: @MainActor @Sendable () async throws -> T) async rethrows -> T where T: Sendable {
         try await body()
     }
 }

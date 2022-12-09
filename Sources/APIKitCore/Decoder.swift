@@ -15,7 +15,7 @@ public protocol Decoder<Input>: TopLevelDecoder {
     associatedtype Input
 
     /// Decodes an instance of the indicated type.
-    func decode<T>(_ type: T.Type, from: Self.Input) throws -> T where T : Decodable
+    func decode<T>(_ type: T.Type, from: Self.Input) throws -> T where T: Decodable
 }
 #else
 public protocol Decoder<Input> {
@@ -23,7 +23,7 @@ public protocol Decoder<Input> {
     associatedtype Input
 
     /// Decodes an instance of the indicated type.
-    func decode<T>(_ type: T.Type, from: Self.Input) throws -> T where T : Decodable
+    func decode<T>(_ type: T.Type, from: Self.Input) throws -> T where T: Decodable
 }
 #endif
 
