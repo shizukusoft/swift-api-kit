@@ -10,10 +10,10 @@ extension Result {
     public func tryMap<NewSuccess>(_ transform: (Success) throws -> NewSuccess) -> Result<NewSuccess, Error> {
         do {
             switch self {
-                case let .success(success):
-                    return try .success(transform(success))
-                case let .failure(failure):
-                    return .failure(failure)
+            case let .success(success):
+                return try .success(transform(success))
+            case let .failure(failure):
+                return .failure(failure)
             }
         } catch {
             return .failure(error)
