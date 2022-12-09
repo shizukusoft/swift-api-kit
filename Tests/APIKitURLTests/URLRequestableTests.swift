@@ -28,10 +28,6 @@ final class URLRequestableTests: XCTestCase {
             typealias RequestBodyType = Status
             typealias ResponseBodyType = Status
 
-            var apiRequestType: APIKitURL.APIURLRequestableType<Status> {
-                .data
-            }
-
             var urlRequest: URLRequest {
                 var urlRequest = URLRequest(url: URL(string: "https://mastodon.example/api/v1/statuses")!)
                 urlRequest.httpRequestMethod = .post
@@ -61,10 +57,6 @@ final class URLRequestableTests: XCTestCase {
         struct TimelineRequest: Encodable, APIURLRequestable {
             typealias RequestBodyType = Self
             typealias ResponseBodyType = [Status]
-
-            var apiRequestType: APIKitURL.APIURLRequestableType<TimelineRequest> {
-                .data
-            }
 
             var urlRequest: URLRequest {
                 var urlRequest = URLRequest(url: URL(string: "https://mastodon.example/api/v1/statuses")!)

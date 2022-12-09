@@ -8,7 +8,7 @@
 import Foundation
 
 extension URLRequest: URLRequestable {
-    public var requestType: RequestType {
+    public var urlRequestType: RequestType {
         .data
     }
 

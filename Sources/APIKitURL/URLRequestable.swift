@@ -12,7 +12,7 @@ public enum URLRequestablePayload {
     case file(URL)
 }
 
-public enum URLRequestableType {
+public enum URLRequestableRequestType {
     case data(URLRequestablePayload?)
     case upload(URLRequestablePayload)
     case download(URLRequestablePayload?)
@@ -27,14 +27,14 @@ public enum URLRequestableType {
 }
 
 public protocol URLRequestable {
-    typealias RequestType = URLRequestableType
+    typealias RequestType = URLRequestableRequestType
     typealias RequestPayload = URLRequestablePayload
 
-    var requestType: RequestType { get throws }
+    var urlRequestType: RequestType { get throws }
     var urlRequest: URLRequest { get }
 }
 
-extension URLRequestablePayload {
+extension URLRequestable.RequestPayload {
     public var data: Data {
         get throws {
             switch self {
@@ -47,7 +47,7 @@ extension URLRequestablePayload {
     }
 }
 
-extension URLRequestableType {
+extension URLRequestable.RequestType {
     public var requestPayload: URLRequestablePayload? {
         switch self {
         case .data(let urlRequestablePayload):

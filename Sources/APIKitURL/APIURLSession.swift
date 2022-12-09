@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import APIKitCore
 
 public actor APIURLSession {
     public nonisolated let urlSession: URLSession
     let urlSessionDelegate: URLSessionDelegate
+    public var urlAuthenticator: URLAuthenticator?
 
     public init(configuration: Configuration) {
         let urlSessionDelegate = URLSessionDelegate()
@@ -21,12 +23,18 @@ public actor APIURLSession {
     }
 }
 
+extension APIURLSession: Session {
+    public var authenticator: Authenticator? {
+        urlAuthenticator
+    }
+}
+
 extension APIURLSession {
     @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
     public func request(_ request: URLRequestable) async throws -> (URLRequestable.RequestPayload, URLResponse) {
         let urlRequest = request.urlRequest
 
-        switch try request.requestType {
+        switch try request.urlRequestType {
         case .data:
             let data = try await urlSession.data(for: urlRequest)
 
@@ -55,7 +63,7 @@ extension APIURLSession {
         let urlRequest = request.urlRequest
 
         do {
-            switch try request.requestType {
+            switch try request.urlRequestType {
             case .data:
                 urlSession.dataTask(with: urlRequest) { data, urlResponse, error in
                     guard let data, let urlResponse else {

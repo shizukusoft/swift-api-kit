@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol Authenticator: Actor {
+public protocol Authenticator: Sendable {
     
 }

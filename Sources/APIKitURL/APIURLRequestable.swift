@@ -24,14 +24,8 @@ public enum APIURLRequestableType<RequestBodyType: Encodable> {
     }
 }
 
-public protocol APIURLRequestable<RequestBodyType, ResponseBodyType>: URLRequestable {
-    associatedtype RequestBodyType: Encodable
-    associatedtype ResponseBodyType: Decodable
-
-    var apiRequestType: APIURLRequestableType<RequestBodyType> { get }
-
-    var requestBodyEncoder: any Encoder<Data> { get }
-    var responseBodyDecoder: any Decoder<Data> { get }
+public protocol APIURLRequestable<RequestBodyType, ResponseBodyType>: APIRequestable, URLRequestable {
+    var apiURLRequestType: APIURLRequestableType<RequestBodyType> { get }
 }
 
 extension APIURLRequestable {
@@ -42,12 +36,16 @@ extension APIURLRequestable {
     var responseBodyDecoder: any Decoder<Data> {
         JSONDecoder()
     }
+
+    var apiURLRequestType: APIURLRequestableType<RequestBodyType> {
+        .data
+    }
 }
 
 extension APIURLRequestable {
-    var requestType: RequestType {
+    var urlRequestType: RequestType {
         get throws {
-            switch apiRequestType {
+            switch apiURLRequestType {
             case .data(let requestBody):
                 let payload = try requestBody.flatMap {
                     try RequestPayload.data( requestBodyEncoder.encode($0))
