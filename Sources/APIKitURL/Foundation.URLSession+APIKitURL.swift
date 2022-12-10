@@ -65,7 +65,7 @@ extension URLSession {
             return try await task()
         }
         #else
-        return try task()
+        return try await task()
         #endif
     }
 
@@ -111,7 +111,7 @@ extension URLSession {
             return try await task()
         }
         #else
-        return try task()
+        return try await task()
         #endif
     }
 
@@ -157,7 +157,7 @@ extension URLSession {
             return try await task()
         }
         #else
-        return try task()
+        return try await task()
         #endif
     }
 
@@ -202,7 +202,7 @@ extension URLSession {
             return try await task()
         }
         #else
-        return try task()
+        return try await task()
         #endif
     }
 
@@ -247,7 +247,7 @@ extension URLSession {
             return try await task()
         }
         #else
-        return try task()
+        return try await task()
         #endif
     }
 }
