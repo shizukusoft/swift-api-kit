@@ -18,65 +18,63 @@ final class URLRequestableTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    @available(macOS 12.0, *)
-    func testExample1() async throws {
-        struct Status: Codable {
-            var status: String
-        }
-
-        struct StatusRequest: APIURLRequestable {
-            typealias RequestBodyType = Status
-            typealias ResponseBodyType = Status
-
-            var urlRequest: URLRequest {
-                var urlRequest = URLRequest(url: URL(string: "https://mastodon.example/api/v1/statuses")!)
-                urlRequest.httpRequestMethod = .post
-
-                return urlRequest
-            }
-
-            var requestBodyEncoder: any Encoder<Data> {
-                JSONEncoder()
-            }
-
-            var responseBodyDecoder: any Decoder<Data> {
-                JSONDecoder()
-            }
-        }
-
-        let session = APIURLSession(configuration: .init(urlSessionConfiguration: .default))
-        let status: Status = try await session.request(StatusRequest())
-    }
-
-    @available(macOS 12.0, *)
-    func testExample2() async throws {
-        struct Status: Codable {
-            var status: String
-        }
-
-        struct TimelineRequest: Encodable, APIURLRequestable {
-            typealias RequestBodyType = Self
-            typealias ResponseBodyType = [Status]
-
-            var urlRequest: URLRequest {
-                var urlRequest = URLRequest(url: URL(string: "https://mastodon.example/api/v1/statuses")!)
-                urlRequest.httpRequestMethod = .post
-
-                return urlRequest
-            }
-
-            var requestBodyEncoder: any Encoder<Data> {
-                JSONEncoder()
-            }
-
-            var responseBodyDecoder: any Decoder<Data> {
-                JSONDecoder()
-            }
-
-            var sinceID: String
-        }
-
-        let session = APIURLSession(configuration: .init(urlSessionConfiguration: .default))
-        let statuses: [Status] = try await session.request(TimelineRequest(sinceID: "SOME_ID"))
-    }
+//    func testExample1() async throws {
+//        struct Status: Codable {
+//            var status: String
+//        }
+//
+//        struct StatusRequest: APIURLRequestable {
+//            typealias RequestBodyType = Status
+//            typealias ResponseBodyType = Status
+//
+//            var urlRequest: URLRequest {
+//                var urlRequest = URLRequest(url: URL(string: "https://mastodon.example/api/v1/statuses")!)
+//                urlRequest.httpRequestMethod = .post
+//
+//                return urlRequest
+//            }
+//
+//            var requestBodyEncoder: any Encoder<Data> {
+//                JSONEncoder()
+//            }
+//
+//            var responseBodyDecoder: any Decoder<Data> {
+//                JSONDecoder()
+//            }
+//        }
+//
+//        let session = APIURLSession(configuration: .init(urlSessionConfiguration: .default))
+//        let status: Status = try await session.request(StatusRequest())
+//    }
+//
+//    func testExample2() async throws {
+//        struct Status: Codable {
+//            var status: String
+//        }
+//
+//        struct TimelineRequest: Encodable, APIURLRequestable {
+//            typealias RequestBodyType = Self
+//            typealias ResponseBodyType = [Status]
+//
+//            var urlRequest: URLRequest {
+//                var urlRequest = URLRequest(url: URL(string: "https://mastodon.example/api/v1/statuses")!)
+//                urlRequest.httpRequestMethod = .post
+//
+//                return urlRequest
+//            }
+//
+//            var requestBodyEncoder: any Encoder<Data> {
+//                JSONEncoder()
+//            }
+//
+//            var responseBodyDecoder: any Decoder<Data> {
+//                JSONDecoder()
+//            }
+//
+//            var sinceID: String
+//        }
+//
+//        let session = APIURLSession(configuration: .init(urlSessionConfiguration: .default))
+//        let statuses: [Status] = try await session.request(TimelineRequest(sinceID: "SOME_ID"))
+//    }
 }
