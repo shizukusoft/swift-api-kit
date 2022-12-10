@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        operating-system: ["ubuntu-20.04", "ubuntu-22.04", "macos-11", "macos-12"]
+        operating-system: ["ubuntu-20.04", "ubuntu-22.04", "macos-12"]
         swift-version: ["5.7.1"]
     runs-on: ${{ matrix.operating-system }}
     steps:
