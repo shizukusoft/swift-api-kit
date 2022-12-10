@@ -1,13 +1,13 @@
-name: Test
+name: Tests
 
 on:
   push:
     paths:
-      - '.github/workflows/test.yml'
+      - '.github/workflows/tests.yml'
       - '**/*.swift'
   pull_request:
     paths:
-      - '.github/workflows/test.yml'
+      - '.github/workflows/tests.yml'
       - '**/*.swift'
 
 jobs:
