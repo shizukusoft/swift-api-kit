@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CommonCrypto
+import Crypto
 import APIKitURL
 
 public actor OAuth1URLAuthenticator {
@@ -87,10 +87,12 @@ extension OAuth1URLAuthenticator {
             credential?.tokenSecret.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed) ?? ""
         ].compactMap { $0 }.joined(separator: "&")
 
-        var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
-        CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA1), oauthSigningKey, oauthSigningKey.count, oauthSignatureBaseString, oauthSignatureBaseString.count, &digest)
+        let authenticationCode = HMAC<Insecure.SHA1>.authenticationCode(
+            for: Data(oauthSignatureBaseString.utf8),
+            using: .init(data: Data(oauthSigningKey.utf8))
+        )
 
-        let oauthSignature = Data(digest).base64EncodedString(options: [])
+        let oauthSignature = Data(authenticationCode).base64EncodedString()
         oauthQueryItems += [URLQueryItem(name: "oauth_signature", value: oauthSignature)]
 
         let oauthAuthorization = "OAuth " + oauthQueryItems
