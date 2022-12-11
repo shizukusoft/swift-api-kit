@@ -46,7 +46,7 @@ let package = Package(
             dependencies: ["APIKitCore"]),
         .target(
             name: "APIKitURL",
-            dependencies: ["APIKitCore"]),
+            dependencies: ["APIKitCore", "URLEncodedFormEncoder"]),
         .testTarget(
             name: "APIKitURLTests",
             dependencies: ["APIKitURL"]),
@@ -62,5 +62,8 @@ let package = Package(
         .target(
             name: "APIKitOAuth2",
             dependencies: ["APIKitURL"]),
+        .target(
+            name: "URLEncodedFormEncoder",
+            dependencies: []),
     ]
 )
