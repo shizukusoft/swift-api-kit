@@ -35,6 +35,8 @@ extension OAuth1URLAuthenticator {
         timestamp: TimeInterval = Date().timeIntervalSince1970,
         oAuthParameters: [String: String]?
     ) throws {
+        let rfc3986UnreservedCharacterSet = CharacterSet.rfc3986Unreserved
+
         var bodyURLComponents = URLComponents()
         bodyURLComponents.percentEncodedQuery = urlRequest.httpBody
             .flatMap { String(data: $0, encoding: .utf8) }
@@ -73,19 +75,19 @@ extension OAuth1URLAuthenticator {
                     return $0.name < $1.name
                 }
             })
-            .map { [$0.name, $0.value].compactMap { $0?.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed) } }
+            .map { [$0.name, $0.value].compactMap { $0?.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet) } }
             .map { $0.joined(separator: "=") }
             .joined(separator: "&")
 
         let oauthSignatureBaseString = [
             "\((urlRequest.httpMethod ?? "GET").uppercased())",
-            urlComponents?.url?.absoluteString.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed),
-            oauthSignatureParametersString.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed)
+            urlComponents?.url?.absoluteString.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet),
+            oauthSignatureParametersString.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet)
         ].compactMap { $0 }.joined(separator: "&")
 
         let oauthSigningKey = [
-            consumerSecret.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed),
-            credential?.tokenSecret.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed) ?? ""
+            consumerSecret.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet),
+            credential?.tokenSecret.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet) ?? ""
         ].compactMap { $0 }.joined(separator: "&")
 
         let authenticationCode = HMAC<Insecure.SHA1>.authenticationCode(
@@ -106,8 +108,8 @@ extension OAuth1URLAuthenticator {
             })
             .map {
                 [
-                    $0.name.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed),
-                    $0.value?.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed).flatMap { "\"\($0)\"" }
+                    $0.name.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet),
+                    $0.value?.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet).flatMap { "\"\($0)\"" }
                 ].compactMap { $0 }
             }
             .map { $0.joined(separator: "=") }
