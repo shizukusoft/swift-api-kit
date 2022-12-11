@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import APIKitURL
 @testable import APIKitOAuth1
 
 final class OAuth1URLAuthenticatorTests: XCTestCase {
