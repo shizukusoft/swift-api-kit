@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/10.
 //
 
-import Foundation
-
 extension Actor {
     @inlinable
     public func run<T>(resultType: T.Type = T.self, body: @Sendable (isolated Self) throws -> T) async rethrows -> T where T: Sendable {
