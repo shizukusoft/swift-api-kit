@@ -14,14 +14,15 @@ public actor OAuth1URLAuthenticator {
     public nonisolated let consumerSecret: String
     public var credential: Credential?
 
-    public init(consumerKey: String, consumerSecret: String) {
+    public init(consumerKey: String, consumerSecret: String, credential: Credential? = nil) {
         self.consumerKey = consumerKey
         self.consumerSecret = consumerSecret
+        self.credential = credential
     }
 }
 
 extension OAuth1URLAuthenticator {
-    public struct Credential {
+    public struct Credential: Equatable, Hashable, Sendable {
         public var token: String
         public var tokenSecret: String
     }
@@ -33,7 +34,7 @@ extension OAuth1URLAuthenticator {
         nonce: String = UUID().uuidString,
         timestamp: TimeInterval = Date().timeIntervalSince1970,
         oAuthParameters: [String: String]?
-    ) async throws {
+    ) throws {
         var bodyURLComponents = URLComponents()
         bodyURLComponents.percentEncodedQuery = urlRequest.httpBody
             .flatMap { String(data: $0, encoding: .utf8) }
@@ -118,6 +119,6 @@ extension OAuth1URLAuthenticator {
 
 extension OAuth1URLAuthenticator: URLAuthenticator {
     public func sign(to urlRequest: inout URLRequest) async throws {
-        try await self.sign(to: &urlRequest, oAuthParameters: nil)
+        try self.sign(to: &urlRequest, oAuthParameters: nil)
     }
 }

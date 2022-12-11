@@ -56,6 +56,9 @@ let package = Package(
                 "APIKitURL",
                 .product(name: "Crypto", package: "swift-crypto"),
             ]),
+        .testTarget(
+            name: "APIKitOAuth1Tests",
+            dependencies: ["APIKitOAuth1"]),
         .target(
             name: "APIKitOAuth2",
             dependencies: ["APIKitURL"]),
