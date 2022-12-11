@@ -13,4 +13,12 @@ public protocol APIRequestable<RequestBodyType, ResponseBodyType> {
 
     var requestBodyEncoder: any TopLevelEncoder<Data> { get }
     var responseBodyDecoder: any TopLevelDecoder<Data> { get }
+
+    func shouldSign(by authenticator: Authenticator, session: isolated Session) -> Bool
+}
+
+extension APIRequestable {
+    func shouldSign(by authenticator: Authenticator, session: isolated Session) -> Bool {
+        false
+    }
 }
