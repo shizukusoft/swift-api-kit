@@ -11,6 +11,6 @@ public protocol APIRequestable<RequestBodyType, ResponseBodyType> {
     associatedtype RequestBodyType: Encodable
     associatedtype ResponseBodyType: Decodable
 
-    var requestBodyEncoder: any Encoder<Data> { get }
-    var responseBodyDecoder: any Decoder<Data> { get }
+    var requestBodyEncoder: any TopLevelEncoder<Data> { get }
+    var responseBodyDecoder: any TopLevelDecoder<Data> { get }
 }

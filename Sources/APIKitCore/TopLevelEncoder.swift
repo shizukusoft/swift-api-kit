@@ -1,5 +1,5 @@
 //
-//  Encoder.swift
+//  TopLevelEncoder.swift
 //  
 //
 //  Created by Jaehong Kang on 2022/12/01.
@@ -10,7 +10,7 @@ import Foundation
 #if canImport(Combine)
 import Combine
 
-public protocol Encoder<Output>: TopLevelEncoder {
+public protocol TopLevelEncoder<Output>: Combine.TopLevelEncoder {
     /// The type this encoder produces.
     associatedtype Output
 
@@ -20,7 +20,7 @@ public protocol Encoder<Output>: TopLevelEncoder {
     func encode<T>(_ value: T) throws -> Self.Output where T: Encodable
 }
 #else
-public protocol Encoder<Output> {
+public protocol TopLevelEncoder<Output> {
     /// The type this encoder produces.
     associatedtype Output
 
@@ -31,7 +31,7 @@ public protocol Encoder<Output> {
 }
 #endif
 
-extension JSONEncoder: Encoder {
+extension JSONEncoder: TopLevelEncoder {
     /// The type this encoder produces.
     public typealias Output = Data
 }

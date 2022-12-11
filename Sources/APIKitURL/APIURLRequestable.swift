@@ -7,8 +7,8 @@
 
 import Foundation
 import APIKitCore
-@_exported import protocol APIKitCore.Decoder
-@_exported import protocol APIKitCore.Encoder
+@_exported import protocol APIKitCore.TopLevelDecoder
+@_exported import protocol APIKitCore.TopLevelEncoder
 
 public enum APIURLRequestableType<RequestBodyType: Encodable> {
     case data(RequestBodyType?)
@@ -29,11 +29,11 @@ public protocol APIURLRequestable<RequestBodyType, ResponseBodyType>: APIRequest
 }
 
 extension APIURLRequestable {
-    var requestBodyEncoder: any Encoder<Data> {
+    var requestBodyEncoder: any TopLevelEncoder<Data> {
         JSONEncoder()
     }
 
-    var responseBodyDecoder: any Decoder<Data> {
+    var responseBodyDecoder: any TopLevelDecoder<Data> {
         JSONDecoder()
     }
 
