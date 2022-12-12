@@ -47,9 +47,6 @@ let package = Package(
         .target(
             name: "APIKitURL",
             dependencies: ["APIKitCore"]),
-        .testTarget(
-            name: "APIKitURLTests",
-            dependencies: ["APIKitURL"]),
         .target(
             name: "APIKitOAuth1",
             dependencies: [
