@@ -1,11 +1,9 @@
 //
 //  TopLevelEncoder.swift
-//  
 //
-//  Created by Jaehong Kang on 2022/12/01.
 //
-
-import Foundation
+//  Created by Jaehong Kang on 2022/12/13.
+//
 
 #if canImport(Combine)
 import Combine
@@ -30,8 +28,3 @@ public protocol TopLevelEncoder<Output> {
     func encode<T>(_ value: T) throws -> Self.Output where T: Encodable
 }
 #endif
-
-extension JSONEncoder: TopLevelEncoder {
-    /// The type this encoder produces.
-    public typealias Output = Data
-}

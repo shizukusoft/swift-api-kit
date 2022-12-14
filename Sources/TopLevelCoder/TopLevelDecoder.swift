@@ -1,11 +1,9 @@
 //
 //  TopLevelDecoder.swift
-//  
 //
-//  Created by Jaehong Kang on 2022/12/01.
 //
-
-import Foundation
+//  Created by Jaehong Kang on 2022/12/13.
+//
 
 #if canImport(Combine)
 import Combine
@@ -26,8 +24,3 @@ public protocol TopLevelDecoder<Input> {
     func decode<T>(_ type: T.Type, from: Self.Input) throws -> T where T: Decodable
 }
 #endif
-
-extension JSONDecoder: TopLevelDecoder {
-    /// The type this decoder accepts.
-    public typealias Input = Data
-}

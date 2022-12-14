@@ -40,7 +40,7 @@ let package = Package(
             dependencies: ["APIKitURL", "APIKitOAuth1", "APIKitOAuth2"]),
         .target(
             name: "APIKitCore",
-            dependencies: []),
+            dependencies: ["TopLevelCoder"]),
         .testTarget(
             name: "APIKitCoreTests",
             dependencies: ["APIKitCore"]),
@@ -63,7 +63,10 @@ let package = Package(
             name: "APIKitOAuth2",
             dependencies: ["APIKitURL"]),
         .target(
-            name: "URLEncodedFormEncoder",
+            name: "TopLevelCoder",
             dependencies: []),
+        .target(
+            name: "URLEncodedFormEncoder",
+            dependencies: ["TopLevelCoder"]),
     ]
 )
