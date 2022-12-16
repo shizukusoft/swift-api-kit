@@ -68,5 +68,8 @@ let package = Package(
         .target(
             name: "URLEncodedFormEncoder",
             dependencies: ["TopLevelCoder"]),
+        .testTarget(
+            name: "URLEncodedFormEncoderTests",
+            dependencies: ["URLEncodedFormEncoder"]),
     ]
 )
