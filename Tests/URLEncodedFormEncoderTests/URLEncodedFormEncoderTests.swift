@@ -67,7 +67,7 @@ final class URLEncodedFormEncoderTests: XCTestCase {
         let test = Test(key: ["a", "b", "c"])
 
         let encoder = URLEncodedFormEncoder()
-        
+
         encoder.arrayEncodingStrategy = .brackets(withIndex: false)
         var result: Result<String, Error>?
         measure {
