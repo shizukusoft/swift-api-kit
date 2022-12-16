@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/14.
 //
 
-import Foundation
-
 extension URLEncodedFormEncoder {
     struct _UnkeyedEncodingContainer: _URLEncodedFormEncodingContainer {
         let codingPath: [CodingKey]

@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/14.
 //
 
-import Foundation
-
 protocol _URLEncodedFormEncodingContainer {
     var codingPath: [CodingKey] { get }
     var options: URLEncodedFormEncoder._Options { get }
