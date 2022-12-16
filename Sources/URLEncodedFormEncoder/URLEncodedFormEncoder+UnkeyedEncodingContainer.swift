@@ -15,6 +15,7 @@ extension URLEncodedFormEncoder {
 }
 
 extension URLEncodedFormEncoder._UnkeyedEncodingContainer {
+    @inline(__always)
     private func append(_ newElement: URLEncodedFormFuture, for value: Any) throws {
         if case .notAllowed = options.arrayEncodingStrategy {
             throw EncodingError.invalidValue(value, .init(codingPath: codingPath, debugDescription: "Array is not allowed."))
@@ -23,6 +24,7 @@ extension URLEncodedFormEncoder._UnkeyedEncodingContainer {
         append(newElement)
     }
 
+    @inline(__always)
     private func append(_ newElement: URLEncodedFormFuture) {
         refArray.array.append(newElement)
     }
