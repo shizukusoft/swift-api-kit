@@ -113,7 +113,7 @@ final class URLEncodedFormEncoderTests: XCTestCase {
                 try encoder.encode(test)
             }
         }
-        try XCTAssertEqual(result?.get(), "key[0]=a&key[1]=b&key[2]=c")
+        try XCTAssertEqual(result?.get(), "key=a&key=b&key=c")
     }
 
     func testEncoderArrayWithNotAllowed() throws {
