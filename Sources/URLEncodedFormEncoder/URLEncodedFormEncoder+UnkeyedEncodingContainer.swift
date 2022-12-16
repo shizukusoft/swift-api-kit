@@ -16,6 +16,20 @@ extension URLEncodedFormEncoder {
     }
 }
 
+extension URLEncodedFormEncoder._UnkeyedEncodingContainer {
+    private func append(_ newElement: URLEncodedFormFuture, for value: Any) throws {
+        if case .notAllowed = options.arrayEncodingStrategy {
+            throw EncodingError.invalidValue(value, .init(codingPath: codingPath, debugDescription: "Array is not allowed."))
+        }
+
+        append(newElement)
+    }
+
+    private func append(_ newElement: URLEncodedFormFuture) {
+        refArray.array.append(newElement)
+    }
+}
+
 extension URLEncodedFormEncoder._UnkeyedEncodingContainer: UnkeyedEncodingContainer {
     var count: Int {
         refArray.array.count
@@ -26,63 +40,63 @@ extension URLEncodedFormEncoder._UnkeyedEncodingContainer: UnkeyedEncodingContai
             return
         }
 
-        refArray.array.append(future)
+        try append(future, for: Optional<Any>.none as Any)
     }
 
     func encode(_ value: Bool) throws {
-        try refArray.array.append(self.value(from: value))
+        try append(self.value(from: value), for: value)
     }
 
-    func encode(_ value: String) {
-        refArray.array.append(.string(value))
+    func encode(_ value: String) throws {
+        try append(.string(value), for: value)
     }
 
-    func encode(_ value: Double) {
-        self.encode(String(value))
+    func encode(_ value: Double) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: Float) {
-        self.encode(String(value))
+    func encode(_ value: Float) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: Int) {
-        self.encode(String(value))
+    func encode(_ value: Int) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: Int8) {
-        self.encode(String(value))
+    func encode(_ value: Int8) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: Int16) {
-        self.encode(String(value))
+    func encode(_ value: Int16) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: Int32) {
-        self.encode(String(value))
+    func encode(_ value: Int32) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: Int64) {
-        self.encode(String(value))
+    func encode(_ value: Int64) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: UInt) {
-        self.encode(String(value))
+    func encode(_ value: UInt) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: UInt8) {
-        self.encode(String(value))
+    func encode(_ value: UInt8) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: UInt16) {
-        self.encode(String(value))
+    func encode(_ value: UInt16) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: UInt32) {
-        self.encode(String(value))
+    func encode(_ value: UInt32) throws {
+        try self.encode(String(value))
     }
 
-    func encode(_ value: UInt64) {
-        self.encode(String(value))
+    func encode(_ value: UInt64) throws {
+        try self.encode(String(value))
     }
 
     func encode<T: Encodable>(_ value: T) throws {
@@ -92,12 +106,12 @@ extension URLEncodedFormEncoder._UnkeyedEncodingContainer: UnkeyedEncodingContai
             throw EncodingError.invalidValue(value, EncodingError.Context(codingPath: codingPath, debugDescription: "\(T.self) did not encode any values."))
         }
 
-        refArray.array.append(future)
+        try append(future, for: value)
     }
 
     func nestedContainer<NestedKey: CodingKey>(keyedBy keyType: NestedKey.Type) -> KeyedEncodingContainer<NestedKey> {
         let newRefDictionary: URLEncodedFormFuture.RefDictionary = [:]
-        refArray.array.append(.nestedDictionary(newRefDictionary))
+        append(.nestedDictionary(newRefDictionary))
 
         let codingKey = URLEncodedFormEncoder._CodingKey(intValue: count - 1)
 
@@ -113,7 +127,7 @@ extension URLEncodedFormEncoder._UnkeyedEncodingContainer: UnkeyedEncodingContai
 
     func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
         let newRefArray: URLEncodedFormFuture.RefArray = []
-        refArray.array.append(.nestedArray(newRefArray))
+        append(.nestedArray(newRefArray))
 
         let codingKey = URLEncodedFormEncoder._CodingKey(intValue: count - 1)
 
@@ -127,7 +141,7 @@ extension URLEncodedFormEncoder._UnkeyedEncodingContainer: UnkeyedEncodingContai
 
     func superEncoder() -> Encoder {
         let newEncoder = encoder(for: URLEncodedFormEncoder._CodingKey(intValue: count))
-        refArray.array.append(.encoder(newEncoder))
+        append(.encoder(newEncoder))
 
         return newEncoder
     }
