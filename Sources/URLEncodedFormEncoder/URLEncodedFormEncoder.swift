@@ -68,42 +68,42 @@ extension URLEncodedFormEncoder {
             self.codingPath = codingPath
             self.options = options
         }
-
-        func container<Key: CodingKey>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> {
-            if future == nil {
-                future = .nestedDictionary([:])
-            }
-
-            guard case .nestedDictionary(let refDictionary) = future else {
-                preconditionFailure()
-            }
-
-            return KeyedEncodingContainer(
-                _KeyedEncodingContainer(codingPath: codingPath, options: options, encoder: self, refDictionary: refDictionary)
-            )
-        }
-
-        func unkeyedContainer() -> UnkeyedEncodingContainer {
-            if future == nil {
-                future = .nestedArray([])
-            }
-
-            guard case .nestedArray(let refArray) = future else {
-                preconditionFailure()
-            }
-
-            return _UnkeyedEncodingContainer(codingPath: codingPath, options: options, encoder: self, refArray: refArray)
-        }
-
-        func singleValueContainer() -> SingleValueEncodingContainer {
-            _SingleValueEncodingContainer(codingPath: codingPath, options: options, encoder: self)
-        }
     }
 }
 
 extension URLEncodedFormEncoder._Encoder: Encoder {
     var userInfo: [CodingUserInfoKey: Any] {
         options.userInfo
+    }
+
+    func container<Key: CodingKey>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> {
+        if future == nil {
+            future = .nestedDictionary([:])
+        }
+
+        guard case .nestedDictionary(let refDictionary) = future else {
+            preconditionFailure()
+        }
+
+        return KeyedEncodingContainer(
+            URLEncodedFormEncoder._KeyedEncodingContainer(codingPath: codingPath, options: options, encoder: self, refDictionary: refDictionary)
+        )
+    }
+
+    func unkeyedContainer() -> UnkeyedEncodingContainer {
+        if future == nil {
+            future = .nestedArray([])
+        }
+
+        guard case .nestedArray(let refArray) = future else {
+            preconditionFailure()
+        }
+
+        return URLEncodedFormEncoder._UnkeyedEncodingContainer(codingPath: codingPath, options: options, encoder: self, refArray: refArray)
+    }
+
+    func singleValueContainer() -> SingleValueEncodingContainer {
+        URLEncodedFormEncoder._SingleValueEncodingContainer(codingPath: codingPath, options: options, encoder: self)
     }
 }
 
