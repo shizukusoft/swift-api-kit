@@ -86,7 +86,9 @@ extension URLEncodedFormEncoder._UnkeyedEncodingContainer: UnkeyedEncodingContai
     }
 
     func encode<T: Encodable>(_ value: T) throws {
-        guard let future = try self.value(from: value) else {
+        let codingKey = URLEncodedFormEncoder._CodingKey(intValue: count)
+
+        guard let future = try self.value(from: value, for: codingKey) else {
             throw EncodingError.invalidValue(value, EncodingError.Context(codingPath: codingPath, debugDescription: "\(T.self) did not encode any values."))
         }
 
@@ -97,11 +99,13 @@ extension URLEncodedFormEncoder._UnkeyedEncodingContainer: UnkeyedEncodingContai
         let newRefDictionary: URLEncodedFormFuture.RefDictionary = [:]
         refArray.array.append(.nestedDictionary(newRefDictionary))
 
+        let codingKey = URLEncodedFormEncoder._CodingKey(intValue: count - 1)
+
         return KeyedEncodingContainer(
             URLEncodedFormEncoder._KeyedEncodingContainer(
-                codingPath: codingPath + [URLEncodedFormEncoder._CodingKey(intValue: count - 1)],
+                codingPath: codingPath + [codingKey],
                 options: options,
-                encoder: encoder,
+                encoder: encoder(for: codingKey),
                 refDictionary: newRefDictionary
             )
         )
@@ -111,10 +115,12 @@ extension URLEncodedFormEncoder._UnkeyedEncodingContainer: UnkeyedEncodingContai
         let newRefArray: URLEncodedFormFuture.RefArray = []
         refArray.array.append(.nestedArray(newRefArray))
 
+        let codingKey = URLEncodedFormEncoder._CodingKey(intValue: count - 1)
+
         return URLEncodedFormEncoder._UnkeyedEncodingContainer(
             codingPath: codingPath + [URLEncodedFormEncoder._CodingKey(intValue: count - 1)],
             options: options,
-            encoder: encoder,
+            encoder: encoder(for: codingKey),
             refArray: newRefArray
         )
     }
