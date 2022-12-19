@@ -9,7 +9,7 @@ import Foundation
 import Crypto
 import APIKitURL
 
-public struct OAuth1: Sendable {
+public struct OAuth1: Equatable, Hashable, Sendable {
     public let consumer: Consumer
 
     public init(consumer: Consumer) {
