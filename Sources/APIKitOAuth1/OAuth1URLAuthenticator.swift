@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Crypto
 import APIKitURL
 
 public actor OAuth1URLAuthenticator {
