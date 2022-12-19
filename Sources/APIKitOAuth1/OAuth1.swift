@@ -36,6 +36,14 @@ extension OAuth1 {
 }
 
 extension OAuth1 {
+    private static func urlQueryItemComparator(_ lhs: URLQueryItem, rhs: URLQueryItem) -> Bool {
+        if lhs.name == rhs.name {
+            return lhs.value ?? "" < rhs.value ?? ""
+        } else {
+            return lhs.name < rhs.name
+        }
+    }
+
     public func httpAuthorizationHeaderValue(
         for token: Token?,
         httpMethod: String = "GET",
@@ -71,13 +79,7 @@ extension OAuth1 {
 
         let oauthSignatureParameters = urlQueryItems + oauthQueryItems
         let oauthSignatureParametersString = oauthSignatureParameters
-            .sorted(by: {
-                if $0.name == $1.name {
-                    return $0.value ?? "" < $1.value ?? ""
-                } else {
-                    return $0.name < $1.name
-                }
-            })
+            .sorted(by: Self.urlQueryItemComparator)
             .map { [$0.name, $0.value].compactMap { $0?.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet) } }
             .map { $0.joined(separator: "=") }
             .joined(separator: "&")
@@ -102,13 +104,7 @@ extension OAuth1 {
         oauthQueryItems += [URLQueryItem(name: "oauth_signature", value: oauthSignature)]
 
         let oauthAuthorization = "OAuth " + oauthQueryItems
-            .sorted(by: {
-                if $0.name == $1.name {
-                    return $0.value ?? "" < $1.value ?? ""
-                } else {
-                    return $0.name < $1.name
-                }
-            })
+            .sorted(by: Self.urlQueryItemComparator)
             .map {
                 [
                     $0.name.addingPercentEncoding(withAllowedCharacters: rfc3986UnreservedCharacterSet),
