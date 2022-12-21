@@ -18,7 +18,7 @@ public protocol APIRequestable<RequestBodyType, ResponseBodyType> {
 }
 
 extension APIRequestable {
-    func shouldSign(by authenticator: Authenticator, session: isolated Session) -> Bool {
+    public func shouldSign(by authenticator: Authenticator, session: isolated Session) -> Bool {
         false
     }
 }
