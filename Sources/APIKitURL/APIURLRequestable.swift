@@ -28,21 +28,21 @@ public protocol APIURLRequestable<RequestBodyType, ResponseBodyType>: APIRequest
 }
 
 extension APIURLRequestable {
-    var requestBodyEncoder: any TopLevelEncoder<Data> {
+    public var requestBodyEncoder: any TopLevelEncoder<Data> {
         JSONEncoder()
     }
 
-    var responseBodyDecoder: any TopLevelDecoder<Data> {
+    public var responseBodyDecoder: any TopLevelDecoder<Data> {
         JSONDecoder()
     }
 
-    var apiURLRequestType: APIURLRequestableType<RequestBodyType> {
+    public var apiURLRequestType: APIURLRequestableType<RequestBodyType> {
         .data
     }
 }
 
 extension APIURLRequestable {
-    var urlRequestType: RequestType {
+    public var urlRequestType: RequestType {
         get throws {
             switch apiURLRequestType {
             case .data(let requestBody):
@@ -64,4 +64,4 @@ extension APIURLRequestable {
     }
 }
 
-extension APIURLRequestable where Self: Encodable, RequestBodyType == Self { }
+public extension APIURLRequestable where Self: Encodable, RequestBodyType == Self { }
