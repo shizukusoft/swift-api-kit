@@ -19,6 +19,13 @@ extension APIURLSession {
             try await urlAuthenticator.sign(to: &urlRequest)
         }
 
+        if
+            let urlString = urlRequest.url?.absoluteString,
+            let baseURL = await baseURL
+        {
+            urlRequest.url = URL(string: urlString, relativeTo: baseURL)
+        }
+
         switch try request.urlRequestType {
         case .data:
             let data = try await urlSession.data(for: urlRequest)
