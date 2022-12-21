@@ -13,7 +13,6 @@ public actor APIURLSession {
     public nonisolated let urlSession: URLSession
     internal let urlSessionDelegate: URLSessionDelegate
     public var urlAuthenticator: URLAuthenticator?
-    public var baseURL: URL?
 
     public init(configuration: Configuration) {
         self.configuration = configuration

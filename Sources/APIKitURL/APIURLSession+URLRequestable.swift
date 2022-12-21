@@ -21,7 +21,7 @@ extension APIURLSession {
 
         if
             let urlString = urlRequest.url?.absoluteString,
-            let baseURL = await baseURL
+            let baseURL = configuration.baseURL
         {
             urlRequest.url = URL(string: urlString, relativeTo: baseURL)
         }
