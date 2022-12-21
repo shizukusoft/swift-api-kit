@@ -8,7 +8,11 @@
 import Foundation
 
 extension APIURLSession {
-    public struct Configuration {
-        let urlSessionConfiguration: URLSessionConfiguration
+    public struct Configuration: Sendable {
+        public var urlSessionConfiguration: URLSessionConfiguration
+
+        public init(urlSessionConfiguration: URLSessionConfiguration) {
+            self.urlSessionConfiguration = urlSessionConfiguration
+        }
     }
 }

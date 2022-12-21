@@ -9,11 +9,14 @@ import Foundation
 import APIKitCore
 
 public actor APIURLSession {
+    public nonisolated let configuration: Configuration
     public nonisolated let urlSession: URLSession
-    let urlSessionDelegate: URLSessionDelegate
+    internal let urlSessionDelegate: URLSessionDelegate
     public var urlAuthenticator: URLAuthenticator?
 
     public init(configuration: Configuration) {
+        self.configuration = configuration
+
         let urlSessionDelegate = URLSessionDelegate()
 
         self.urlSession = URLSession(configuration: configuration.urlSessionConfiguration, delegate: urlSessionDelegate, delegateQueue: nil)
