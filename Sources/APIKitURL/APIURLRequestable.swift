@@ -9,22 +9,15 @@ import Foundation
 import APIKitCore
 @_exported import TopLevelCoder
 
-public enum APIURLRequestableType<RequestBodyType: Encodable> {
-    case data(RequestBodyType?)
-    case upload(RequestBodyType)
-    case download(RequestBodyType?)
-
-    public static var data: Self {
-        .data(nil)
-    }
-
-    public static var download: Self {
-        .download(nil)
-    }
+public enum APIURLRequestableType {
+    case data
+    case upload
+    case download
 }
 
 public protocol APIURLRequestable<RequestBodyType, ResponseBodyType>: APIRequestable, URLRequestable {
-    var apiURLRequestType: APIURLRequestableType<RequestBodyType> { get }
+    var apiURLRequestType: APIURLRequestableType { get }
+    var requestBody: RequestBodyType { get }
 }
 
 extension APIURLRequestable {
@@ -36,7 +29,7 @@ extension APIURLRequestable {
         JSONDecoder()
     }
 
-    public var apiURLRequestType: APIURLRequestableType<RequestBodyType> {
+    public var apiURLRequestType: APIURLRequestableType {
         .data
     }
 }
@@ -45,23 +38,27 @@ extension APIURLRequestable {
     public var urlRequestType: RequestType {
         get throws {
             switch apiURLRequestType {
-            case .data(let requestBody):
-                let payload = try requestBody.flatMap {
-                    try RequestPayload.data( requestBodyEncoder.encode($0))
-                }
-
-                return .data(payload)
-            case .upload(let requestBody):
-                return try .upload(.data(requestBodyEncoder.encode(requestBody)))
-            case .download(let requestBody):
-                let payload = try requestBody.flatMap {
-                    try RequestPayload.data( requestBodyEncoder.encode($0))
-                }
-
-                return .download(payload)
+            case .data:
+                return try .data(.data(requestBodyData))
+            case .upload:
+                return try .upload(.data(requestBodyData))
+            case .download:
+                return try .download(.data(requestBodyData))
             }
         }
     }
 }
 
-public extension APIURLRequestable where Self: Encodable, RequestBodyType == Self { }
+extension APIURLRequestable {
+    public var requestBodyData: Data {
+        get throws {
+            try requestBodyEncoder.encode(requestBody)
+        }
+    }
+}
+
+public extension APIURLRequestable where Self: Encodable, RequestBodyType == Self {
+    var requestBody: RequestBodyType {
+        self
+    }
+}

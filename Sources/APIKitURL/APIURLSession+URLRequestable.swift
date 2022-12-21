@@ -27,6 +27,17 @@ extension APIURLSession {
         }
 
         switch try request.urlRequestType {
+        case .data, .download:
+            if
+                urlRequest.httpBody == nil
+            {
+                urlRequest.httpBody = try request.urlRequestType.requestPayload?.data
+            }
+        case .upload(.data), .upload(.file):
+            break
+        }
+
+        switch try request.urlRequestType {
         case .data:
             let data = try await urlSession.data(for: urlRequest)
 
