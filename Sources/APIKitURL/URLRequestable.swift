@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum URLRequestablePayload {
+public enum URLRequestablePayload: Equatable, Hashable, Sendable {
     case data(Data)
     case file(URL)
 }
@@ -28,13 +28,38 @@ public enum URLRequestableRequestType {
 
 public protocol URLRequestable {
     typealias RequestType = URLRequestableRequestType
-    typealias RequestPayload = URLRequestablePayload
+    typealias Payload = URLRequestablePayload
 
     var urlRequestType: RequestType { get throws }
     var urlRequest: URLRequest { get }
+
+    var allowedHTTPStatusCode: (any Collection<Int>)? { get }
+    func validate(responsePayload: URLRequestable.Payload, urlResponse: URLResponse) throws
 }
 
-extension URLRequestable.RequestPayload {
+extension URLRequestable {
+    public var allowedHTTPStatusCode: (any Collection<Int>)? {
+        200..<400
+    }
+
+    public func validateHTTPStatusCode(_ urlResponse: URLResponse) throws {
+        if
+            let allowedHTTPStatusCode,
+            let httpURLResponse = urlResponse as? HTTPURLResponse
+        {
+            guard allowedHTTPStatusCode.contains(httpURLResponse.statusCode) else {
+                throw ValidationError.notAllowedStatusCode(httpURLResponse.statusCode, context: .init(urlResponse: urlResponse, httpResponseBody: nil))
+            }
+        }
+    }
+
+    @inlinable
+    public func validate(responsePayload: URLRequestable.Payload, urlResponse: URLResponse) throws {
+        try validateHTTPStatusCode(urlResponse)
+    }
+}
+
+extension URLRequestable.Payload {
     public var data: Data {
         get throws {
             switch self {

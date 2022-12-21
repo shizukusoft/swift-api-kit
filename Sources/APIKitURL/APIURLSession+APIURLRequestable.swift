@@ -20,7 +20,7 @@ extension APIURLSession {
             }
         }()
 
-        let response: (URLRequestable.RequestPayload, URLResponse) = try await self.request(request, shouldSign: shouldSign)
+        let response: (URLRequestable.Payload, URLResponse) = try await self.request(request, shouldSign: shouldSign)
 
         return try (request.responseBodyDecoder.decode(R.ResponseBodyType.self, from: response.0.data), response.1)
     }
