@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/01.
 //
 
-import Foundation
-
 extension APIURLSession {
     public struct Configuration: Equatable, Hashable, Sendable {
         private var _urlSessionConfiguration: URLSessionConfiguration

@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/22.
 //
 
-import Foundation
-
 public enum ValidationError: Error, Equatable, Hashable, Sendable {
     case notAllowedStatusCode(_ code: Int, context: Context)
 }

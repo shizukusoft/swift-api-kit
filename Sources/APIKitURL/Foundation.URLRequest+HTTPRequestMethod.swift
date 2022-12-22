@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/01.
 //
 
-import Foundation
-
 extension URLRequest {
     public enum HTTPRequestMethod: Equatable, Hashable, Sendable {
         case get

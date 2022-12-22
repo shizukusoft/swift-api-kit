@@ -5,9 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/01.
 //
 
-import Foundation
-import APIKitCore
-
 public actor APIURLSession {
     public nonisolated let configuration: Configuration
     public var urlAuthenticator: URLAuthenticator?

@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/11.
 //
 
-import Foundation
-
 extension CharacterSet {
     public static var asciiUppercaseLetters: Self {
         CharacterSet(charactersIn: "A"..."Z")

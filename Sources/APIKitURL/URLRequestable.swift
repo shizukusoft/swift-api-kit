@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/01.
 //
 
-import Foundation
-
 public enum URLRequestablePayload: Equatable, Hashable, Sendable {
     case data(Data)
     case file(URL)

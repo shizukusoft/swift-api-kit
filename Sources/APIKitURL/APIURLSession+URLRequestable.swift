@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/11.
 //
 
-import APIKitCore
-
 extension APIURLSession {
     internal nonisolated func urlRequest(for request: URLRequestable, shouldSign: Bool) async throws -> URLRequest {
         var urlRequest = request.urlRequest

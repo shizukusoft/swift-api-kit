@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/01.
 //
 
-import Foundation
-import APIKitCore
 @_exported import TopLevelCoder
 
 public enum APIURLRequestableType: Equatable, Hashable, Sendable {

@@ -5,8 +5,6 @@
 //  Created by Jaehong Kang on 2022/12/10.
 //
 
-import Foundation
-
 extension URLSession {
     private actor TaskManager {
         var task: URLSessionTask?
