@@ -9,14 +9,23 @@ import Foundation
 
 extension APIURLSession {
     public struct Configuration: Sendable {
-        public var urlSessionConfiguration: URLSessionConfiguration
+        private var _urlSessionConfiguration: URLSessionConfiguration
+        public var urlSessionConfiguration: URLSessionConfiguration {
+            get {
+                _urlSessionConfiguration.copy() as! URLSessionConfiguration
+            }
+            set {
+                _urlSessionConfiguration = newValue.copy() as! URLSessionConfiguration
+            }
+        }
+
         public var baseURL: URL?
 
         public init(
             urlSessionConfiguration: URLSessionConfiguration = .default,
             baseURL: URL? = nil
         ) {
-            self.urlSessionConfiguration = urlSessionConfiguration
+            self._urlSessionConfiguration = urlSessionConfiguration.copy() as! URLSessionConfiguration
             self.baseURL = baseURL
         }
     }
