@@ -9,7 +9,7 @@ import Foundation
 import APIKitCore
 @_exported import TopLevelCoder
 
-public enum APIURLRequestableType {
+public enum APIURLRequestableType: Equatable, Hashable, Sendable {
     case data
     case upload
     case download

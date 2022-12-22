@@ -6,19 +6,19 @@
 //
 
 extension URLEncodedFormEncoder {
-    public enum BoolEncodingStrategy {
+    public enum BoolEncodingStrategy: Sendable {
         case numeric
         case literal
         case custom(@Sendable (Bool) throws -> String)
     }
 
-    public enum NilEncodingStrategy {
+    public enum NilEncodingStrategy: Equatable, Hashable, Sendable {
         case `nil`
         case `null`
         case ignore
     }
 
-    public enum ArrayEncodingStrategy {
+    public enum ArrayEncodingStrategy: Sendable {
         case notAllowed
         case none
         case brackets(withIndex: Bool)
@@ -26,7 +26,7 @@ extension URLEncodedFormEncoder {
         case custom(@Sendable (Int) throws -> String)
     }
 
-    public enum DictionaryEncodingStrategy {
+    public enum DictionaryEncodingStrategy: Equatable, Hashable, Sendable {
         case notAllowed
         case brackets
     }

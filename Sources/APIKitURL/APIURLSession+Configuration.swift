@@ -8,7 +8,7 @@
 import Foundation
 
 extension APIURLSession {
-    public struct Configuration: Sendable {
+    public struct Configuration: Equatable, Hashable, Sendable {
         private var _urlSessionConfiguration: URLSessionConfiguration
         public var urlSessionConfiguration: URLSessionConfiguration {
             get {

@@ -8,7 +8,7 @@
 import Foundation
 
 extension URLRequest {
-    public enum HTTPRequestMethod {
+    public enum HTTPRequestMethod: Equatable, Hashable, Sendable {
         case get
         case post
         case delete

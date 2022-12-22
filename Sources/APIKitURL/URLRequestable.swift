@@ -12,7 +12,7 @@ public enum URLRequestablePayload: Equatable, Hashable, Sendable {
     case file(URL)
 }
 
-public enum URLRequestableRequestType {
+public enum URLRequestableRequestType: Equatable, Hashable, Sendable {
     case data(URLRequestablePayload?)
     case upload(URLRequestablePayload)
     case download(URLRequestablePayload?)
