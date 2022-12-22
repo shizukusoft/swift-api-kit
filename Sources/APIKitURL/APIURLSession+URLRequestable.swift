@@ -8,8 +8,7 @@
 import APIKitCore
 
 extension APIURLSession {
-    @_disfavoredOverload
-    public nonisolated func request(_ request: URLRequestable, shouldSign: Bool = false) async throws -> (URLRequestable.Payload, URLResponse) {
+    internal nonisolated func urlRequest(for request: URLRequestable, shouldSign: Bool) async throws -> URLRequest {
         var urlRequest = request.urlRequest
 
         if
@@ -36,6 +35,13 @@ extension APIURLSession {
         case .upload(.data), .upload(.file):
             break
         }
+
+        return urlRequest
+    }
+
+    @_disfavoredOverload
+    public nonisolated func request(_ request: URLRequestable, shouldSign: Bool = false) async throws -> (URLRequestable.Payload, URLResponse) {
+        let urlRequest = try await urlRequest(for: request, shouldSign: shouldSign)
 
         let response: (URLRequestable.Payload, URLResponse)
 
