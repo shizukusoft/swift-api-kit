@@ -6,6 +6,6 @@
 //
 
 #if canImport(FoundationNetworking)
-@_exported @preconcurrency import FoundationNetworking
+@_exported import FoundationNetworking
 #endif
 @_exported import URLEncodedFormEncoder
