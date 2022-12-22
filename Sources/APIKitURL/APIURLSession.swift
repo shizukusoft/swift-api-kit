@@ -10,9 +10,10 @@ import APIKitCore
 
 public actor APIURLSession {
     public nonisolated let configuration: Configuration
-    public nonisolated let urlSession: URLSession
-    internal let urlSessionDelegate: URLSessionDelegate
     public var urlAuthenticator: URLAuthenticator?
+
+    internal nonisolated let urlSession: URLSession
+    internal nonisolated let urlSessionDelegate: URLSessionDelegate
 
     public init(configuration: Configuration) {
         self.configuration = configuration
