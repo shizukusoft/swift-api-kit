@@ -7,6 +7,7 @@
 
 @_exported import APIKitCore
 #if canImport(FoundationNetworking)
-@_exported import FoundationNetworking
+@_exported @preconcurrency import Foundation
+@_exported @preconcurrency import FoundationNetworking
 #endif
 @_exported import URLEncodedFormEncoder
