@@ -12,8 +12,9 @@ public actor APIURLSession {
     internal nonisolated let urlSession: URLSession
     internal nonisolated let urlSessionDelegate: URLSessionDelegate
 
-    public init(configuration: Configuration) {
+    public init(configuration: Configuration, urlAuthenticator: URLAuthenticator? = nil) {
         self.configuration = configuration
+        self.urlAuthenticator = urlAuthenticator
 
         let urlSessionDelegate = URLSessionDelegate()
 
