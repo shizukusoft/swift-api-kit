@@ -27,11 +27,21 @@ extension OAuth1 {
     public struct Consumer: Equatable, Hashable, Sendable {
         public var key: String
         public var secret: String
+
+        public init(key: String, secret: String) {
+            self.key = key
+            self.secret = secret
+        }
     }
 
     public struct Token: Equatable, Hashable, Sendable {
         public var token: String
         public var secret: String
+
+        public init(token: String, secret: String) {
+            self.token = token
+            self.secret = secret
+        }
     }
 }
 
