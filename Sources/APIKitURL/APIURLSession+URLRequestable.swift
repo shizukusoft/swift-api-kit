@@ -78,9 +78,4 @@ extension APIURLSession {
 
         return response
     }
-
-    @_disfavoredOverload
-    public nonisolated func request(_ request: URLRequestable, shouldSign: Bool = false) async throws -> URLRequestable.Payload {
-        try await self.request(request, shouldSign: shouldSign).0
-    }
 }

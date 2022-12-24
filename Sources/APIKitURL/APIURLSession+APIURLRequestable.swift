@@ -22,8 +22,4 @@ extension APIURLSession {
 
         return try (request.responseBodyDecoder.decode(R.ResponseBodyType.self, from: response.0.data), response.1)
     }
-
-    public nonisolated func request<R: APIURLRequestable>(_ request: R) async throws -> R.ResponseBodyType {
-        try await self.request(request).0
-    }
 }
