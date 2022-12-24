@@ -108,6 +108,38 @@ final class URLEncodedFormEncoderTests: XCTestCase {
         try XCTAssertEqual(result?.get(), "key=a&key=b&key=c")
     }
 
+    func testEncoderArrayWithCommaSeparated() throws {
+        struct Test: Encodable {
+            var key: [String]
+        }
+
+        let test = Test(key: ["a", "b", "c"])
+
+        let encoder = URLEncodedFormEncoder()
+
+        encoder.arrayEncodingStrategy = .commaSeparated
+        var result: Result<String, Error>?
+        measure {
+            result = .init {
+                try encoder.encode(test)
+            }
+        }
+        try XCTAssertEqual(result?.get(), "key=a,b,c")
+    }
+
+    func testEncoderArrayWithNestedCommaSeparated() throws {
+        struct Test: Encodable {
+            var key: [[String: String]]
+        }
+
+        let test = Test(key: [["a":"a"], ["b":"b"], ["c":"c"]])
+
+        let encoder = URLEncodedFormEncoder()
+
+        encoder.arrayEncodingStrategy = .commaSeparated
+        XCTAssertThrowsError(try encoder.encode(test) as String)
+    }
+
     func testEncoderArrayWithNotAllowed() throws {
         struct Test: Encodable {
             var key: [String]
@@ -118,12 +150,6 @@ final class URLEncodedFormEncoderTests: XCTestCase {
         let encoder = URLEncodedFormEncoder()
 
         encoder.arrayEncodingStrategy = .notAllowed
-        var result: Result<String, Error>?
-        measure {
-            result = .init {
-                try encoder.encode(test)
-            }
-        }
-        XCTAssertThrowsError(try result?.get())
+        XCTAssertThrowsError(try encoder.encode(test) as String)
     }
 }

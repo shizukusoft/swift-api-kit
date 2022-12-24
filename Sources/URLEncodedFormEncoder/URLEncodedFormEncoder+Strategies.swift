@@ -22,6 +22,7 @@ extension URLEncodedFormEncoder {
         case notAllowed
         case none
         case brackets(withIndex: Bool)
+        case commaSeparated
 
         case custom(@Sendable (Int) throws -> String)
     }
@@ -37,7 +38,7 @@ extension URLEncodedFormEncoder.ArrayEncodingStrategy {
         switch self {
         case .notAllowed:
             preconditionFailure()
-        case .none:
+        case .none, .commaSeparated:
             return ""
         case .brackets(withIndex: true):
             return "[\(index)]"

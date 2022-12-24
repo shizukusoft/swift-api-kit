@@ -69,8 +69,28 @@ extension URLEncodedFormFuture {
         case .encoder(let encoder):
             return try encoder.future?.urlQueryItems(keySpace: keySpace, options: options) ?? []
         case .nestedArray(let refArray):
-            return try refArray.array.enumerated().flatMap { (index, value) in
+            let urlQueryItems = try refArray.array.enumerated().flatMap { (index, value) in
                 try value.urlQueryItems(keySpace: keySpace + options.arrayEncodingStrategy(index), options: options)
+            }
+
+            switch options.arrayEncodingStrategy {
+            case .commaSeparated:
+                return [
+                    URLQueryItem(
+                        name: keySpace,
+                        value: try urlQueryItems.lazy
+                            .compactMap {
+                                guard $0.name == keySpace else {
+                                    throw URLEncodedFormEncodingError.nestedArrayFlatMapError(.init(codingPath: [], debugDescription: "Nested value on array not allowed when using commaSeparated option: \(keySpace)"))
+                                }
+
+                                return $0.value
+                            }
+                            .joined(separator: ",")
+                    )
+                ]
+            case .brackets(_), .custom(_), .none, .notAllowed:
+                return urlQueryItems
             }
         case .nestedDictionary(let refDictionary):
             return try refDictionary.dictionary.flatMap { (key, value) in
