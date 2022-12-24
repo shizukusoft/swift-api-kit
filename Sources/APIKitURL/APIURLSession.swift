@@ -23,6 +23,10 @@ public actor APIURLSession {
 
         urlSessionDelegate.apiURLSession = self
     }
+
+    deinit {
+        urlSession.invalidateAndCancel()
+    }
 }
 
 extension APIURLSession: Session {
