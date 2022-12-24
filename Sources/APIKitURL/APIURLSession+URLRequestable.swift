@@ -5,6 +5,8 @@
 //  Created by Jaehong Kang on 2022/12/11.
 //
 
+import Foundation
+
 extension APIURLSession {
     internal nonisolated func urlRequest(for request: URLRequestable, shouldSign: Bool) async throws -> URLRequest {
         var urlRequest = request.urlRequest
@@ -23,15 +25,30 @@ extension APIURLSession {
             urlRequest.url = URL(string: urlString, relativeTo: baseURL)
         }
 
-        switch try request.urlRequestType {
-        case .data, .download:
-            if
-                urlRequest.httpBody == nil
-            {
-                urlRequest.httpBody = try request.urlRequestType.requestPayload?.data
+        switch urlRequest.httpRequestMethod {
+        case .get, .delete, nil:
+            guard
+                let url = urlRequest.url,
+                let data = try request.urlRequestType.requestPayload?.data,
+                let query = String(data: data, encoding: .utf8)
+            else {
+                break
             }
-        case .upload(.data), .upload(.file):
-            break
+
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            urlComponents?.query = query
+            urlRequest.url = url
+        case .post, .put, .patch, .other(_):
+            switch try request.urlRequestType {
+            case .data, .download:
+                if
+                    urlRequest.httpBody == nil
+                {
+                    urlRequest.httpBody = try request.urlRequestType.requestPayload?.data
+                }
+            case .upload(.data), .upload(.file):
+                break
+            }
         }
 
         return urlRequest

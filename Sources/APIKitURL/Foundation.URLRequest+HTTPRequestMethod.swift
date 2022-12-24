@@ -11,6 +11,7 @@ extension URLRequest {
         case post
         case delete
         case put
+        case patch
         case other(String)
     }
 
@@ -38,6 +39,8 @@ extension URLRequest.HTTPRequestMethod: LosslessStringConvertible {
             return "DELETE"
         case .put:
             return "PUT"
+        case .patch:
+            return "PATCH"
         case .other(let method):
             return method
         }
@@ -53,6 +56,8 @@ extension URLRequest.HTTPRequestMethod: LosslessStringConvertible {
             self = .delete
         case "PUT":
             self = .put
+        case "PATCH":
+            self = .patch
         default:
             self = .other(description)
         }
