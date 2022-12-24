@@ -17,6 +17,8 @@ open class URLEncodedFormEncoder {
     open var dictionaryEncodingStrategy: DictionaryEncodingStrategy = .brackets
     open var userInfo: [CodingUserInfoKey: Any] = [:]
 
+    public init() { }
+
     public func encode<T: Encodable>(_ value: T) throws -> String {
         let options = self.options
         let encoder = _Encoder(codingPath: [], options: options)
