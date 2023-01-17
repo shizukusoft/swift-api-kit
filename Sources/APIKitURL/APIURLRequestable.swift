@@ -5,6 +5,7 @@
 //  Created by Jaehong Kang on 2022/12/01.
 //
 
+import APIKitCore
 @_exported import TopLevelCoder
 
 public enum APIURLRequestableType: Equatable, Hashable, Sendable {
@@ -58,5 +59,11 @@ extension APIURLRequestable {
 public extension APIURLRequestable where Self: Encodable, RequestBodyType == Self {
     var requestBody: RequestBodyType {
         self
+    }
+}
+
+public extension APIURLRequestable where RequestBodyType == Empty {
+    var requestBody: RequestBodyType {
+        Empty()
     }
 }
