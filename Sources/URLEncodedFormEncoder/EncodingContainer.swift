@@ -34,6 +34,7 @@ extension _URLEncodedFormEncodingContainer {
         }
     }
 
+    @_disfavoredOverload
     func value(from encodable: Encodable, for additionalKey: CodingKey? = nil) throws -> URLEncodedFormFuture? {
         let encoder = encoder(for: additionalKey)
         try encodable.encode(to: encoder)
