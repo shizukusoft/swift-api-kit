@@ -30,6 +30,8 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/shizukusoft/swift-top-level-coder.git", from: "0.0.1"),
+        .package(url: "https://github.com/shizukusoft/swift-url-encoded-form-coder.git", from: "0.0.1"),
         .package(url: "https://github.com/apple/swift-crypto.git", "1.0.0" ..< "3.0.0"),
     ],
     targets: [
@@ -40,13 +42,18 @@ let package = Package(
             dependencies: ["APIKitURL", "APIKitOAuth1", "APIKitOAuth2"]),
         .target(
             name: "APIKitCore",
-            dependencies: ["TopLevelCoder"]),
+            dependencies: [
+                .product(name: "TopLevelCoder", package: "swift-top-level-coder")
+            ]),
         .testTarget(
             name: "APIKitCoreTests",
             dependencies: ["APIKitCore"]),
         .target(
             name: "APIKitURL",
-            dependencies: ["APIKitCore", "URLEncodedFormEncoder"]),
+            dependencies: [
+                "APIKitCore",
+                .product(name: "URLEncodedFormEncoder", package: "swift-url-encoded-form-coder")
+            ]),
         .testTarget(
             name: "APIKitURLTests",
             dependencies: ["APIKitURL"]),
@@ -62,14 +69,5 @@ let package = Package(
         .target(
             name: "APIKitOAuth2",
             dependencies: ["APIKitURL"]),
-        .target(
-            name: "TopLevelCoder",
-            dependencies: []),
-        .target(
-            name: "URLEncodedFormEncoder",
-            dependencies: ["TopLevelCoder"]),
-        .testTarget(
-            name: "URLEncodedFormEncoderTests",
-            dependencies: ["URLEncodedFormEncoder"]),
     ]
 )

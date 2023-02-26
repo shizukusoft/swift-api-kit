@@ -1,14 +1,34 @@
 {
-  "pins" : [
-    {
-      "identity" : "swift-crypto",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-crypto.git",
-      "state" : {
-        "revision" : "92a04c10fc5ce0504f8396aac7392126033e547c",
-        "version" : "2.2.2"
+  "object": {
+    "pins": [
+      {
+        "package": "swift-crypto",
+        "repositoryURL": "https://github.com/apple/swift-crypto.git",
+        "state": {
+          "branch": null,
+          "revision": "92a04c10fc5ce0504f8396aac7392126033e547c",
+          "version": "2.2.2"
+        }
+      },
+      {
+        "package": "TopLevelCoder",
+        "repositoryURL": "https://github.com/shizukusoft/swift-top-level-coder.git",
+        "state": {
+          "branch": null,
+          "revision": "d5e1cb8b85309c422aaf6b55108d8034dea7037e",
+          "version": "0.0.1"
+        }
+      },
+      {
+        "package": "URLEncodedFormCoder",
+        "repositoryURL": "https://github.com/shizukusoft/swift-url-encoded-form-coder.git",
+        "state": {
+          "branch": null,
+          "revision": "4755548a817d195f05a77a5da1c312086d18fad8",
+          "version": "0.0.1"
+        }
       }
-    }
-  ],
-  "version" : 2
+    ]
+  },
+  "version": 1
 }
