@@ -30,7 +30,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/shizukusoft/swift-top-level-coder.git", from: "0.0.1"),
+        .package(url: "https://github.com/shizukusoft/swift-top-level-coders.git", from: "0.0.1"),
         .package(url: "https://github.com/shizukusoft/swift-url-encoded-form-coder.git", from: "0.0.1"),
         .package(url: "https://github.com/apple/swift-crypto.git", "1.0.0" ..< "3.0.0"),
     ],
@@ -43,7 +43,8 @@ let package = Package(
         .target(
             name: "APIKitCore",
             dependencies: [
-                .product(name: "TopLevelCoder", package: "swift-top-level-coder")
+                .product(name: "TopLevelCoders", package: "swift-top-level-coders"),
+                .product(name: "TopLevelCodersFoundationSupport", package: "swift-top-level-coders"),
             ]),
         .testTarget(
             name: "APIKitCoreTests",

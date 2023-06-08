@@ -6,4 +6,5 @@
 //
 
 @_exported import Foundation
-@_exported import TopLevelCoder
+@_exported import TopLevelCoders
+@_exported import TopLevelCodersFoundationSupport

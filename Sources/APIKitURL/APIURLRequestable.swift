@@ -6,7 +6,7 @@
 //
 
 import APIKitCore
-@_exported import TopLevelCoder
+@_exported import TopLevelCoders
 
 public enum APIURLRequestableType: Equatable, Hashable, Sendable {
     case data
